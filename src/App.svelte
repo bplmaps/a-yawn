@@ -17,7 +17,7 @@
           // let pubisher = document.publisher_tsi ? document.publisher_tsi : "";
           let callNumber = document.identifier_local_call_tsim.join(" || ");
           let date = document.date_tsim.join(" || ")
-          let aeonOpenUrl = encodeURI(`https://readingroom.bpl.org/aeon/aeon.dll?Action=10&Form=30&title=${title}&author=${author}&date=${date}&callNumber=${callNumber}`);
+          let aeonOpenUrl = encodeURI(`https://readingroom.bpl.org/aeon/aeon.dll?Action=10&Form=20&Value=GenericRequestMaps&ItemTitle=${title}&ItemAuthor=${author}&ItemDate=${date}&CallNumber=${callNumber}&ItemCitation=https://collections.leventhalmap.org/search/${commonwealthId[0]}`);
           window.open(aeonOpenUrl);
         })
         .catch(()=>{
