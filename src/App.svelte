@@ -1,6 +1,10 @@
 <script>
   let inputURL;
 
+  function getValue(v) {
+    return v ? v : ["Unknown"]
+  }
+
   function processRequest(e) {
     const re = /commonwealth:\w*/
     let commonwealthId = inputURL.match(re);
@@ -11,12 +15,11 @@
       fetch(`https://collections.leventhalmap.org/search/${commonwealthId[0]}?format=json`)
         .then(d=>d.json())
         .then((r)=>{
-          let document = r.response.document;
-          let title = document.title_info_primary_tsi;
-          let author = document.name_tsim.join("; ");
-          // let pubisher = document.publisher_tsi ? document.publisher_tsi : "";
-          let callNumber = document.identifier_local_call_tsim.join(" || ");
-          let date = document.date_tsim.join(" || ")
+          let document = getValue(r.response.document);
+          let title = getValue(document.title_info_primary_tsi);
+          let author = getValue(document.name_tsim).join("; ");
+          let callNumber = getValue(document.identifier_local_call_tsim.join(" || "));
+          let date = getValue(document.date_tsim.join(" || "));
           let aeonOpenUrl = encodeURI(`https://readingroom.bpl.org/aeon/aeon.dll?Action=10&Form=20&Value=GenericRequestMaps&ItemTitle=${title}&ItemAuthor=${author}&ItemDate=${date}&CallNumber=${callNumber}&ItemCitation=https://collections.leventhalmap.org/search/${commonwealthId[0]}`);
           window.open(aeonOpenUrl);
         })
