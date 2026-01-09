@@ -15,7 +15,7 @@
       fetch(`https://collections.leventhalmap.org/search/${commonwealthId[0]}?format=json`)
         .then(d=>d.json())
         .then((r)=>{
-          let document = getValue(r.response.document);
+          let document = getValue(r.data.attributes);
           let title = getValue(document.title_info_primary_tsi);
           let author = getValue(document.name_tsim).join("; ");
           let callNumber = getValue(document.identifier_local_call_tsim.join(" || "));
@@ -23,7 +23,8 @@
           let aeonOpenUrl = encodeURI(`https://readingroom.bpl.org/aeon/aeon.dll?Action=10&Form=20&Value=GenericRequestMaps&ItemTitle=${title}&ItemAuthor=${author}&ItemDate=${date}&CallNumber=${callNumber}&ItemCitation=https://collections.leventhalmap.org/search/${commonwealthId[0]}`);
           window.open(aeonOpenUrl);
         })
-        .catch(()=>{
+        .catch((e)=>{
+          console.log(e)
           window.alert("Something went wrong trying to load the metadata for this item")
         })
     }
